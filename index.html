@@ -372,7 +372,9 @@
                     document.styleSheets[0].insertRule(keyframes, 0);
                     this.containerEl.addEventListener(
                         Runner.events.ANIM_END,
-                        this.startGame.bind(this)
+                        this.startGame.bind(this),
+                        document.getElementById("title").innerHTML = "T-REX<br>RUNNER."
+
                     );
                     this.containerEl.style.webkitAnimation =
                         "intro .4s ease-out 1 both";
@@ -384,6 +386,8 @@
                     this.started = true;
                 } else if (this.crashed) {
                     this.restart();
+                    document.getElementById("title").innerHTML = "T-REX<br>RUNNER.";
+
                 }
             },
             startGame: function() {
@@ -555,6 +559,8 @@
                         e.currentTarget == this.containerEl
                     ) {
                         this.restart();
+                        document.getElementById("title").innerHTML = "T-REX<br>RUNNER.";
+
                     }
                 }
                 // Speed drop, activated only when jump key is not pressed.
@@ -584,6 +590,8 @@
                             Runner.keycodes.JUMP[keyCode])
                     ) {
                         this.restart();
+                        document.getElementById("title").innerHTML = "T-REX<br>RUNNER."
+
                     }
                 } else if (this.paused && isjumpKey) {
                     this.play();
@@ -2275,18 +2283,18 @@
 <body id="t">
     <script>
         /*
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  window.fbAsyncInit = function() {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    FB.init({
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      appId      : '190786194818626',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      cookie     : true,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      xfbml      : true,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      version    : '2.2'
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  window.fbAsyncInit = function() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    FB.init({
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      appId      : '190786194818626',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      cookie     : true,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      xfbml      : true,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      version    : '2.2'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    });
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    FB.AppEvents.logPageView();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    FB.AppEvents.logPageView();
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  };
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  };
     </script>
     </script>
     <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
@@ -2361,7 +2369,7 @@
 
             <div style=" float: left;">
                 <font size="6.0">
-                    <STRONG>T-REX <br>RUNNER.</STRONG>
+                    <strong style="color:black;" id="title">인터넷 <br>연결 없음</strong>
                 </font>
                 <font size="2">
                     <U>Made By <a href = "https://forum.whale.naver.com/profile/20-ice-cream/" target="_blank">Ice Cream</a></U>
@@ -2372,6 +2380,22 @@
                 if (navigator.userAgent.toLowerCase().indexOf('sidebar') <= -1) {
                     hideClass(".onlyforchrome ");
                 }
+
+                setTimeout(function() {
+                    document.getElementById("title").innerHTML = "T-REX<br>연결 없음";
+                    setTimeout(function() {
+                        document.getElementById("title").innerHTML = "T-REX<br>RUNN";
+                        setTimeout(function() {
+                            document.getElementById("title").innerHTML = "T-REX<br>RUNNE";
+                            setTimeout(function() {
+                                document.getElementById("title").innerHTML = "T-REX<br>RUNNER.";
+                                setTimeout(function() {
+                                    document.getElementById("title").innerHTML = "스페이스를 눌러<br>시작하세요.";
+                                }, 700);
+                            }, 300);
+                        }, 300);
+                    }, 300);
+                }, 1500);
             </script>
     </div>
     <style>
