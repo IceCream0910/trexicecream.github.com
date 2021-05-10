@@ -675,6 +675,9 @@ $('.keep-go').hide();
             } else {
                 document.removeEventListener(Runner.events.MOUSEDOWN, this);
                 document.removeEventListener(Runner.events.MOUSEUP, this);
+                this.touchController.addEventListener(Runner.events.TOUCHSTART, this);
+                this.touchController.addEventListener(Runner.events.TOUCHEND, this);
+                this.containerEl.addEventListener(Runner.events.TOUCHSTART, this);
             }
         },
 
