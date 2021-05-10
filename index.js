@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 // extract from chromium source code by @liuwayong
+var soundMuted = false;
+var gameOver = false;
 (function() {
     'use strict';
     /**
@@ -570,6 +572,20 @@
 
                 if (playAchievementSound) {
                     this.playSound(this.soundFx.SCORE);
+                    if(!soundMuted) {
+                        var keepgoList = new Array('계속하세요!', '포기하지 마세요!', '와우!', '멋져요!', '좋아요!', 'yeahhhhhh');
+function randomItem(a) {
+  return a[Math.floor(Math.random() * a.length)];
+}
+
+                        $('.keep-go').show();
+                        $('.keep-go-text').html(randomItem(keepgoList));
+                    setTimeout(function() {
+$('.keep-go').hide();
+}, 1500);
+                    }
+                    
+
                 }
 
                 // Night mode.
@@ -770,6 +786,7 @@
          * Game over state.
          */
         gameOver: function() {
+            gameOver = true;
             this.playSound(this.soundFx.HIT);
             vibrate(200);
 
@@ -796,6 +813,12 @@
 
             // Reset the time clock.
             this.time = getTimeStamp();
+            if(!soundMuted) {
+                $('.game-over').show();
+                document.getElementById("molcum-swtich").style.color = "#fff";
+            }
+            
+            document.getElementById("title").innerHTML = "";
         },
 
         stop: function() {
@@ -803,7 +826,11 @@
             this.paused = true;
             cancelAnimationFrame(this.raqId);
             this.raqId = 0;
-            document.getElementById("title").innerHTML = "포기하지 마세요.";
+            if(!gameOver) {
+            document.getElementById("title").innerHTML = "돌아오세요";
+
+            }
+            document.getElementById("molcum-swtich").style.color = "#333";
         },
 
         play: function() {
@@ -813,6 +840,11 @@
                 this.tRex.update(0, Trex.status.RUNNING);
                 this.time = getTimeStamp();
                 this.update();
+                document.getElementById("title").innerHTML = "";
+                $('.game-over').hide();
+                gameOver = false;
+                document.getElementById("molcum-swtich").style.color = "#333";
+                document.getElementById("title").innerHTML = "";
             }
         },
 
@@ -833,6 +865,10 @@
                 this.playSound(this.soundFx.BUTTON_PRESS);
                 this.invert(true);
                 this.update();
+                document.getElementById("title").innerHTML = "";
+                $('.game-over').hide();
+                 gameOver = false;
+                 document.getElementById("molcum-swtich").style.color = "#333";
             }
         },
 
@@ -854,12 +890,15 @@
          * @param {SoundBuffer} soundBuffer
          */
         playSound: function(soundBuffer) {
-            if (soundBuffer) {
+            if(!soundMuted) {
+               if (soundBuffer) {
                 var sourceNode = this.audioContext.createBufferSource();
                 sourceNode.buffer = soundBuffer;
                 sourceNode.connect(this.audioContext.destination);
                 sourceNode.start(0);
             }
+            }
+           
         },
 
         /**
@@ -1840,7 +1879,7 @@
             this.midair = false;
             this.speedDrop = false;
             this.jumpCount = 0;
-            document.getElementById("title").innerHTML = "T-REX<br>RUNNER.";
+             $('custom-stat').hide();
         }
     };
 
@@ -2715,3 +2754,106 @@ function onDocumentLoad() {
 }
 
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
+
+
+//몰컴모드 스위치
+$('.switch').each(function() {
+
+
+    let toggle = $(this),
+        input = toggle.children('input'),
+        $canvas = toggle.find('canvas'),
+        canvas = $canvas[0],
+        renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            context: canvas.getContext('webgl2'),
+            antialias: true,
+            alpha: true
+        });
+
+    renderer.setSize(40, 40);
+    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio * 2 : 2);
+
+    renderer.shadowMap.enabled = true;
+
+    let scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(45, $canvas.width() / $canvas.height(), 0.1, 1000);
+
+    camera.position.z = 92;
+
+    let shape = new THREE.CylinderGeometry(16, 16, 8, 20);
+    let material = new THREE.MeshPhongMaterial({
+        color: 0xE4ECFA,
+        shininess: 20,
+        opacity: .96,
+        transparent: true
+    });
+    let donut = new THREE.Mesh(shape, material);
+
+    scene.add(donut);
+
+    let lightTop = new THREE.DirectionalLight(0xFFFFFF, .6);
+    lightTop.position.set(0, 60, 60);
+    lightTop.castShadow = true;
+    scene.add(lightTop);
+
+    let right = new THREE.DirectionalLight(0xFFFFFF, .5);
+    right.position.set(20, 20, 40);
+    right.castShadow = true;
+    scene.add(right);
+
+    let left = new THREE.DirectionalLight(0xFFFFFF, .5);
+    left.position.set(-20, 20, 40);
+    left.castShadow = true;
+    scene.add(left);
+
+    let active = new THREE.DirectionalLight(0x275EFE, .8);
+    active.position.set(0, -80, 20);
+    active.castShadow = true;
+    scene.add(active);
+
+    scene.add(new THREE.AmbientLight(0x6C7486));
+
+    var render = function() {
+
+        requestAnimationFrame(render);
+
+        TweenMax.render();
+
+        renderer.render(scene, camera);
+
+    };
+
+    render();
+
+    input.on('change', e => {
+        let checked = input.is(':checked'),
+            z = !checked ? THREE.Math.degToRad(0) : THREE.Math.degToRad(90),
+            x = !checked ? THREE.Math.degToRad(90) : THREE.Math.degToRad(0);
+            console.log('d');
+        TweenMax.to(donut.rotation, 3, {
+            ease: Elastic.easeOut.config(!checked ? 1.16 : 1.04, !checked ? .32 : .36),
+            z: z,
+            x: x
+        });
+        active.intensity = !checked ? .4 : .8;
+        active.color.setHex(!checked ? 0xFFFFFF : 0x275EFE);
+    }).trigger('change');
+
+});
+
+function toggleSwitch(checked) {
+    document.getElementById("molcum-swtich").style.color = "#333";
+    console.log(checked);
+    if(checked) {
+        $('.custom-stat').hide();
+        $('.game-over').hide();
+        $('.keep-go').hide();
+        
+        soundMuted = true;
+    } else {
+        $('.custom-stat').show();
+        soundMuted = false;
+
+    }
+}
