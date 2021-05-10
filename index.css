@@ -6,7 +6,9 @@ html, body {
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 100%;
+  height: 90vh;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 .icon {
@@ -24,6 +26,10 @@ html, body {
   display: none;
 }
 
+.custom-stat {
+  position: absolute;
+  bottom: 50%;
+}
 
 /* Offline page */
 
@@ -33,8 +39,10 @@ html, body {
   line-height: 1.55;
   margin: 0 auto;
   max-width: 600px;
-  padding-top: 100px;
   width: 100%;
+  position:fixed;
+  bottom:150px;
+  z-index:9999999;
 }
 
 .offline .runner-container {
@@ -57,7 +65,7 @@ html, body {
 }
 
 .offline .controller {
-  background: rgba(247, 247, 247, .1);
+  background: rgba(247, 247, 247, 0);
   height: 100vh;
   left: 0;
   position: absolute;
@@ -134,3 +142,312 @@ html, body {
     padding: 0 8px;
   }
 }
+
+
+/* 몰컴모드 스위치 */
+::-moz-selection { background: rgba(0,0,0,0.2); }
+::selection { background: rgba(0,0,0,0.2); }
+a.dfn-hover {
+  color: #333;
+  text-decoration: none;
+}
+
+/** Code for hover info **/
+
+dfn {
+  cursor: help;
+  font-style: normal;
+  position: relative;
+  
+}
+dfn::after {
+  content: attr(data-info);
+  display: inline;
+  position: absolute;
+  top: 22px; right: 20px;
+  opacity: 0;
+  width: 200px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5em;
+  padding: 0.5em 0.8em;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  pointer-events: none; /* This prevents the box from apearing when hovered. */
+  transition: opacity 250ms, top 250ms;
+  zoom:0.8;
+}
+dfn::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 12px; left: 20px;
+  opacity: 0;
+  width: 0; height: 0;
+  border: solid transparent 5px;
+  border-bottom-color: rgba(0,0,0,0.8);
+  transition: opacity 250ms, top 250ms;
+}
+dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
+dfn:hover::after,
+dfn:hover::before {opacity: 0.7;}
+dfn:hover::after {top: 30px;}
+dfn:hover::before {top: 20px;}
+
+.switch {
+  --background: #E4ECFA;
+  --background-active: #275EFE;
+  --shadow: rgba(18, 22, 33, .04);
+  --shadow-dark: rgba(18, 22, 33, .32);
+  cursor: pointer;
+  display: flex;
+  -webkit-tap-highlight-color: transparent;
+  zoom: 1.3;
+}
+.switch input[type=checkbox] {
+  display: none;
+}
+.switch input[type=checkbox] + div {
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  background: var(--background);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+.switch input[type=checkbox] + div:before,
+.switch input[type=checkbox] + div canvas {
+  left: 0;
+  top: 0;
+  display: block;
+  position: absolute;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+.switch input[type=checkbox] + div:before {
+  --x: -100%;
+  --s: 1;
+  content: "";
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--background-active);
+  transform: translateX(var(--x)) scale(var(--s));
+}
+.switch input[type=checkbox] + div canvas {
+  --x: -8px;
+  display: block;
+  filter: drop-shadow(0 1px 2px var(--shadow));
+  transform: translate(var(--x), -8px);
+}
+.switch input[type=checkbox]:checked + div:before {
+  --s: 3;
+  --x: 0;
+}
+.switch input[type=checkbox]:checked + div canvas {
+  --x: 8px;
+  filter: drop-shadow(0 1px 2px var(--shadow-dark));
+}
+.switch:active input[type=checkbox] + div {
+  transform: scale(0.92);
+}
+.switch span {
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin: 0 0 0 8px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  font-family: "Roboto", Arial;
+  color: #6C7486;
+}
+body .switch:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+/* 텍스트 효과 */
+
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80em;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    float: center;
+    justify-content: center;
+    padding: 1em;
+    width: 100%;
+}
+
+h1 {
+    animation: text-shadow 1.5s ease-in-out infinite;
+    font-size: 2em;
+    font-weight: 900;
+    line-height: 1;
+}
+
+h1:hover {
+    animation-play-state: paused;
+}
+
+a {
+    color: #024794;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+@keyframes text-shadow {
+    0% {  
+        transform: translateY(0);
+        text-shadow: 
+            0 0 0 #0c2ffb, 
+            0 0 0 #2cfcfd, 
+            0 0 0 #fb203b, 
+            0 0 0 #fefc4b;
+    }
+
+    20% {  
+        transform: translateY(-1em);
+        text-shadow: 
+            0 0.125em 0 #0c2ffb, 
+            0 0.25em 0 #2cfcfd, 
+            0 -0.125em 0 #fb203b, 
+            0 -0.25em 0 #fefc4b;
+    }
+
+    40% {  
+        transform: translateY(0.5em);
+        text-shadow: 
+            0 -0.0625em 0 #0c2ffb, 
+            0 -0.125em 0 #2cfcfd, 
+            0 0.0625em 0 #fb203b, 
+            0 0.125em 0 #fefc4b;
+    }
+    
+   60% {
+        transform: translateY(-0.25em);
+        text-shadow: 
+            0 0.03125em 0 #0c2ffb, 
+            0 0.0625em 0 #2cfcfd, 
+            0 -0.03125em 0 #fb203b, 
+            0 -0.0625em 0 #fefc4b;
+    }
+
+    80% {  
+        transform: translateY(0);
+        text-shadow: 
+            0 0 0 #0c2ffb, 
+            0 0 0 #2cfcfd, 
+            0 0 0 #fb203b, 
+            0 0 0 #fefc4b;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+}
+
+/* game-over  */
+.game-over {
+  background: radial-gradient(#050526 0%, #000000 90%) -20vw 10vh no-repeat black;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  perspective: 340px;
+  height: 100%;
+  overflow: hidden;
+  z-index:-9;
+  display:none;
+}
+
+.centered {
+  position: absolute;
+  left: 50vw;
+  top: 50vh;
+  transform: translateX(-50%) translateY(-50%) rotateX(15deg);
+  text-align: center;
+}
+
+.cyberspace {
+  position: relative;
+  font-family: 'Cyberspace-Raceway-Back',sans-serif;
+  font-size: 4rem;
+  color: black;
+  -webkit-clip: background;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #87d1e4;
+  -webkit-text-stroke-width: 0.1rem;
+  -webkit-text-stroke-color: #87d1e4;
+  filter: url(#extrude);
+}
+
+.stars {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  box-shadow: 55px 453px #c4c4c4, 988px 315px #d4d4d4, -1283px -319px #cfcfcf, 1480px 289px #cccccc, 609px 129px #c2c2c2, 433px -201px #c7c7c7, -684px -262px #f0f0f0, -942px -374px #cfcfcf, -832px -468px #c7c7c7, -921px -270px #e6e6e6, -1435px 15px #d4d4d4, 498px -77px #ebebeb, -365px -80px #ebebeb, -555px -142px #cfcfcf, 861px -302px #e0e0e0, -42px 111px #c2c2c2, -102px 91px #e8e8e8, 802px 473px whitesmoke, 1185px -145px #cccccc, 418px -144px #ebebeb, -710px 334px white, -2px 448px #fafafa, -408px -382px #fcfcfc, -902px 172px #e6e6e6, -725px 333px #ebebeb, 593px -93px #cfcfcf, -798px -282px white, 1144px 63px #c7c7c7, 1060px 144px #c7c7c7, -1025px 438px #d4d4d4, 343px -66px #dbdbdb, 1232px -226px #d6d6d6, -273px -461px #ebebeb, 1069px 433px #d6d6d6, 1013px 152px #ededed, 1265px -184px #e3e3e3, 1484px -108px #d9d9d9, 620px 229px #fafafa, -1301px 402px #f2f2f2, 73px 311px #dbdbdb, 674px 422px #c4c4c4, -410px -80px #f2f2f2, -1198px -463px #cccccc, -824px 46px #f2f2f2, 1020px -170px #dbdbdb, -392px -144px #ebebeb, 1457px 319px #fcfcfc, 250px 252px #cccccc, 0px -179px #f2f2f2, -329px 410px #dedede, -696px -48px #e3e3e3, 870px -152px #cccccc, -949px 237px #c7c7c7, 62px -129px white, -183px 64px #d1d1d1, -534px 351px #d9d9d9, 481px -433px #f7f7f7, 926px 355px #ededed, 1419px -170px #d4d4d4, 802px -60px #d1d1d1, 529px 461px #f0f0f0, -955px -323px #f0f0f0, -1220px -384px #ebebeb, 837px 206px #d6d6d6, -1382px 227px #dedede, 994px -283px #fcfcfc, -1437px 367px #c4c4c4, 566px -301px #cccccc, -627px -122px #fcfcfc, 1408px 429px #cccccc, 764px -345px #e3e3e3, -291px 118px #f7f7f7, -1203px -349px #c4c4c4, 967px -376px #d4d4d4, -445px -87px #c9c9c9, 1172px -201px #c4c4c4, 588px 294px #cccccc, -1480px -197px #d1d1d1, -169px -75px #e0e0e0, 84px 283px #d1d1d1, 7px 221px #d6d6d6, -593px 143px #e6e6e6, -91px -104px #e0e0e0, 403px -459px #fcfcfc, 338px -114px #c7c7c7, -595px -339px #f0f0f0, 241px 37px #f0f0f0, -57px -285px #f0f0f0, 550px 34px #c4c4c4, 426px 74px #dbdbdb, 1362px -206px #ededed, -689px 273px white, 809px 245px #f2f2f2, -919px 140px #dbdbdb, -452px -142px #e6e6e6, -803px -298px #cccccc, 314px 394px white, 576px 219px #d4d4d4, 1270px -360px #f2f2f2, 384px 32px #cfcfcf, 1078px -332px #e0e0e0, -994px -211px #fcfcfc, -147px 418px #d9d9d9, 1341px -334px white, -459px 411px #ededed, -273px -283px #e6e6e6, -1345px 195px #d1d1d1, -792px -469px #cccccc, -209px -468px whitesmoke, -1030px 424px #fafafa, 898px 43px #ededed, -1327px 232px #dbdbdb, -344px -192px #f7f7f7, -959px 274px whitesmoke, -634px -306px #e8e8e8, -1030px 366px #fafafa, 1472px -478px #dedede, -210px 34px white, -1225px 363px #f2f2f2, -578px -238px #fcfcfc, 1097px 103px #f0f0f0, 1214px 423px #c4c4c4, 744px 413px #dbdbdb, 1045px 457px #d6d6d6, 672px 248px #e3e3e3, -161px 253px #d4d4d4, -106px -12px #e8e8e8, -590px -469px #d1d1d1, 448px 151px #fafafa, -397px 463px #e0e0e0, 68px 450px #dedede, 1218px 135px #cccccc, 97px -159px #c4c4c4, -371px -304px #d6d6d6, 1334px 284px #dedede, -837px -114px #c2c2c2, -1253px 423px #dedede, 777px -424px #fcfcfc, 1207px -277px #cfcfcf, -98px -355px #fafafa, 372px -420px #d1d1d1, 368px 22px #cfcfcf, -1088px 209px #dbdbdb, -1419px 97px #d1d1d1, 203px -402px #c9c9c9, -1188px 267px #fcfcfc, 642px -334px #fafafa, -107px -90px #f0f0f0, 567px 446px #fafafa, 694px 55px #f0f0f0, -148px 325px #e6e6e6, -191px 28px #ededed, 545px -452px #c2c2c2, -1154px -227px #c7c7c7, -950px 204px #f2f2f2, 1357px -68px #c2c2c2, 732px 53px #d9d9d9, -100px 317px #c9c9c9, 494px -120px #c2c2c2, 677px -340px #d1d1d1, 783px -434px #d1d1d1, 1403px -349px #c9c9c9, 324px 366px #c2c2c2, -590px -443px #ebebeb, -725px -425px #c9c9c9, -617px 118px #c2c2c2, -465px 210px #ededed, -1222px 24px #f7f7f7, 539px -432px #e3e3e3, -245px 271px #dbdbdb, 389px 331px #ededed, -43px 305px #c2c2c2, 185px -434px whitesmoke, -615px -78px #cfcfcf, -1145px 33px #c7c7c7, 717px -213px #f2f2f2, 384px 148px #d1d1d1, -559px -214px #e3e3e3, 1312px 303px #dbdbdb, 846px 93px #c4c4c4, -1313px 55px #cfcfcf, -970px 192px #e8e8e8, -1094px 166px #d4d4d4, 1447px -193px #d1d1d1, 289px 336px #fafafa, 1158px -155px #c9c9c9, -772px 432px #d4d4d4, 1321px 210px whitesmoke, -1119px 331px #f0f0f0, -792px -414px #c9c9c9, 1047px -305px #e6e6e6, -962px -120px #cfcfcf, 1328px -411px whitesmoke, -1361px 352px #d1d1d1, -728px -265px #d4d4d4, 1387px -449px #cfcfcf, 665px 185px #c7c7c7, -592px 61px #dedede, 832px 454px #d4d4d4, 929px -275px #e6e6e6, -1231px 464px #e8e8e8, -224px 268px #e6e6e6, 595px -328px #d6d6d6, -419px 185px #e6e6e6, 1090px 197px #c9c9c9, 41px 250px #fafafa, 1472px 415px #d1d1d1, 288px -40px #c7c7c7, -432px -354px #ededed, 1433px -404px #dedede, -670px -351px #cfcfcf, -677px 309px #fafafa, 1466px 423px #ebebeb, -1319px 10px whitesmoke, -568px -127px #c9c9c9, -965px 427px #c4c4c4, -1114px 197px #e3e3e3, -1261px -433px #f7f7f7, 1437px -256px #e3e3e3, 1482px -61px #d4d4d4, 1344px -227px #d6d6d6, -1365px -88px #e0e0e0, 867px -25px #d6d6d6, 458px -169px #e6e6e6, -285px -432px whitesmoke, -152px -51px #d9d9d9, -943px 153px #d4d4d4, -1020px -168px #c4c4c4, 815px -178px #ededed, -961px 111px #e3e3e3, -632px 132px #dbdbdb, -251px -436px #f0f0f0, -767px 266px #f7f7f7, 743px 170px #ededed, -1227px 170px #d4d4d4, -919px 113px #d6d6d6, -739px -227px #d6d6d6, -357px -274px #f2f2f2, -1333px 112px #dbdbdb, -790px 290px #e3e3e3, -96px 467px #e3e3e3, 1117px 182px #f2f2f2, -877px -362px #dbdbdb, 498px 125px #cccccc, -1195px -247px #e6e6e6, -772px 416px whitesmoke, 252px -367px white, 86px 225px #cfcfcf, 58px -382px #c4c4c4, -1315px -317px #d9d9d9, -1393px -267px #cfcfcf, -1018px 236px #d1d1d1, 69px -121px #d4d4d4, 349px -182px #e8e8e8, -645px 261px #f7f7f7, -740px -1px #d1d1d1, 584px 175px #f7f7f7, 1212px 103px white, -1174px -436px #e3e3e3, 881px 397px whitesmoke, 240px 287px #dbdbdb, -800px -356px whitesmoke, 116px 441px #ededed, -1133px -452px #d1d1d1, 252px 461px #dbdbdb, -695px -408px #f7f7f7, -950px 78px #ededed, 80px -118px #c2c2c2, -478px 236px #d1d1d1, -1175px -177px #fafafa, -789px 4px #e3e3e3, -1447px -318px #d6d6d6, -1266px -113px #ebebeb, 406px 288px whitesmoke, -458px -220px #f2f2f2, -823px -321px #c4c4c4, -631px 146px #cfcfcf, -271px 276px #f2f2f2, -557px 391px #fafafa, -818px 113px #e0e0e0, 1416px 331px #e6e6e6, 910px -54px #d4d4d4, 1278px -327px #c9c9c9, -1024px -295px #f0f0f0, 469px 416px whitesmoke, 138px 264px #f0f0f0, 1178px -41px whitesmoke, 1286px -224px #f0f0f0, -10px 147px #d4d4d4, -1198px 183px #e3e3e3, -1070px -329px #e3e3e3, -1130px 132px #c2c2c2, 385px -297px #d4d4d4, 1030px -391px #e3e3e3, 467px 277px #cfcfcf, -1497px -207px #c2c2c2, 606px 195px #e8e8e8, 582px -48px #e0e0e0, 1281px 388px white, 1162px 288px #f0f0f0, 1001px 226px #dbdbdb, -1051px 161px #c4c4c4, 1231px 444px #d4d4d4, -3px 359px #d1d1d1, 1338px -80px #dbdbdb, -72px -162px #d9d9d9, -454px 435px #f7f7f7, 1142px -36px #e6e6e6, -905px 178px #e6e6e6, 528px 117px #fafafa, -1184px -322px white, -1149px -342px #cfcfcf, 145px 394px #e6e6e6, -363px -83px #dedede, -712px 164px #f7f7f7, 1384px 398px #d6d6d6, -1100px 295px #d9d9d9, 596px 380px #ebebeb, 169px 71px #cfcfcf, -778px 63px #ededed, -1100px 217px #f7f7f7, -1447px -470px #f7f7f7, 448px 455px white, 104px 90px #cfcfcf, -367px -348px #c7c7c7, 923px 475px #d1d1d1, 851px -466px #ebebeb, -1237px -403px #d9d9d9, -918px 262px #d4d4d4, -443px 456px #e8e8e8, -1040px -173px #e8e8e8, -1036px -216px #e6e6e6, -686px 83px #d4d4d4, -11px 204px #dbdbdb, -1044px 284px #fcfcfc, 1495px 206px #e3e3e3, -1345px 26px #e3e3e3, 1488px -304px #e3e3e3, 368px -177px #c2c2c2, 858px -4px #ededed, -432px 468px #d9d9d9, 66px 210px #d4d4d4, -519px -71px white, -1432px -295px #ededed, -236px 223px #e8e8e8, -953px 13px #c7c7c7, -266px -241px #d1d1d1, -793px 35px #cfcfcf, 671px 412px #c7c7c7, -781px 314px #cccccc, 46px -134px #e8e8e8;
+  animation: fly 10s linear infinite;
+  transform-style: preserve-3d;
+}
+.stars:before, .stars:after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  box-shadow: inherit;
+}
+.stars:before {
+  transform: translateZ(-300px);
+  animation: fade1 10s linear infinite;
+}
+.stars:after {
+  transform: translateZ(-600px);
+  animation: fade2 10s linear infinite;
+}
+
+@keyframes fly {
+  from {
+    transform: translateZ(0px);
+  }
+  to {
+    transform: translateZ(300px);
+  }
+}
+@keyframes fade1 {
+  from {
+    opacity: .5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade2 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: .5;
+  }
+}
+
