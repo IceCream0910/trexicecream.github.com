@@ -382,9 +382,9 @@ var gameOver = false;
 
             this.outerContainerEl.appendChild(this.containerEl);
 
-            if (IS_MOBILE) {
+           // if (IS_MOBILE) {
                 this.createTouchController();
-            }
+            // }
 
             this.startListening();
             this.update();
@@ -687,7 +687,7 @@ $('.keep-go').hide();
          */
         onKeyDown: function(e) {
             // Prevent native page scrolling whilst tapping on mobile.
-            if (IS_MOBILE && this.playing) {
+            if (this.playing) {
                 e.preventDefault();
             }
 
